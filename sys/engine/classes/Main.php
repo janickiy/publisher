@@ -24,6 +24,13 @@ class Main
     }
 
     /**
+     * @return string
+     */
+    public function createToken() {
+        return md5(rand(0, PHP_INT_MAX));
+    }
+
+    /**
      * @param $email
      * @return bool
      */
@@ -62,22 +69,14 @@ class Main
      * @param $type
      * @return string
      */
-    public static function getRandomCode ($type)
+    public static function getRandomCode ($maxcount = 8)
     {
-        $maxcount = 8;
-        $rand37 = "0123456789QWERTYUIOPASDFGHJKLZXCVBNM";
+        $rand37 = "0123456789";
         $str_len = strlen($rand37) - 1;
         srand((double)microtime()*1000000);
         $RandCode = "";
         for($count = 0; $count < $maxcount; $count++)
             $RandCode .= substr($rand37, rand(1, $str_len), 1);
-
-        if ($type == 'demo')
-            $RandCode = 'T' . $RandCode;
-        elseif ($type == 'single')
-            $RandCode = 'H' . $RandCode;
-        elseif ($type == 'multi')
-            $RandCode = 'K' . $RandCode;
 
         return $RandCode;
     }
