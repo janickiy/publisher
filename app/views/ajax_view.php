@@ -1,5 +1,7 @@
 <?php
 
+defined('publisher') || exit('publisher: access denied.');
+
 switch (Core_Array::getGet('action'))
 {
     case 'search_model':

@@ -1,6 +1,6 @@
 <?php
 
-defined('CP') || exit('CarPrices: access denied.');
+defined('publisher') || exit('publisher: access denied.');
 
 class Main
 {
@@ -90,24 +90,5 @@ class Main
         header('Content-Type: application/json');
         echo $content;
         exit();
-    }
-
-    /**
-     * @param $role
-     * @param $str
-     * @return bool
-     */
-    public static function CheckAccess($role, $str)
-    {
-        $arr = explode(",", $str);
-
-        foreach ($arr as $key => $val) {
-            $arr[$key] = trim($val);
-        }
-
-        if (in_array($role, $arr))
-            return FALSE;
-        else
-            return TRUE;
     }
 }

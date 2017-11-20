@@ -1,6 +1,6 @@
 <?php
 
-defined('CP') || exit('CarPrices: access denied.');
+defined('publisher') || exit('publisher: access denied.');
 
 class Exception404 extends Exception
 {
