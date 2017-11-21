@@ -28,51 +28,46 @@ switch (Core_Array::getGet('action'))
 
     case 'add_pic':
 
-        ############ Configuration ##############
-        $config["generate_image_file"]			= true;
-        $config["generate_thumbnails"]			= true;
-        $config["image_max_size"] 				= 500; //Maximum image size (height and width)
-        $config["thumbnail_size"]  				= 200; //Thumbnails will be cropped to 200x200 pixels
-        $config["thumbnail_prefix"]				= "thumb_"; //Normal thumb Prefix
-        $config["destination_folder"]			= './project/'; //upload directory ends with / (slash)
-        $config["thumbnail_destination_folder"]	= './project/'; //upload directory ends with / (slash)
-        $config["upload_url"] 					= "http://localhost/ajax-image-upload-progressbar/uploads/";
-        $config["quality"] 						= 100; //jpeg quality
-        $config["random_file_name"]				= true; //randomize each file name
+        $name_project = Core_Array::getRequest('project');
 
-        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
-            exit;  //try detect AJAX request, simply exist if no Ajax
-        }
+        if ($name_project) {
+            $config["generate_image_file"]			= true;
+            $config["generate_thumbnails"]			= true;
+            $config["image_max_size"] 				= 2000;
+            $config["thumbnail_size"]  				= 200;
+            $config["thumbnail_prefix"]				= "thumb_";
+            $config["destination_folder"]			= './projects/' . core::session()->get('id') . '/' . $name_project;
+            $config["thumbnail_destination_folder"]	= './projects/' . core::session()->get('id') . '/' . $name_project;
+            $config["upload_url"] 					= '/projects/' . core::session()->get('id') . '/' . $name_project;
+            $config["quality"] 						= 100;
+            $config["random_file_name"]				= true;
 
-        //specify uploaded file variable
-        $config["file_data"] = $_FILES["__files"];
-
-        //include sanwebe impage resize class
-
-        core::requireEx('libs', "ImageResize.php");
-
-        //create class instance
-        $im = new ImageResize($config);
-
-        try{
-            $responses = $im->resize(); //initiate image resize
-
-            echo '<h3>Thumbnails</h3>';
-            //output thumbnails
-            foreach($responses["thumbs"] as $response){
-                echo '<img src="'. $config["upload_url"] . $response . '" class="thumbnails" title="' . $response . '" />';
+            if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+                exit;
             }
 
-            /*
-            echo '<h3>Images</h3>';
-            foreach($responses["images"] as $response){
-                echo '<img src="'.$config["upload_url"].$response.'" class="images" title="'.$response.'" />';
+            $config["file_data"] = $_FILES["__files"];
+            core::requireEx('libs', "ImageResize.php");
+
+            $im = new ImageResize($config);
+
+            try{
+                $responses = $im->resize(); //initiate image resize
+
+                echo '<div class="title" style="margin: 20px 0 20px;">Загрузка изображений:</div>';
+                echo '<ul class="downloading">';
+
+                foreach($responses["images"] as $response) {
+                    echo '<li>Загружено <span>' . $response . '</span></li>';
+                }
+
+                echo '</ul>';
+                echo '<div class="success">Ура! Получилось!</div>';
+            } catch (Exception $e) {
+                echo '<div class="error">';
+                echo $e->getMessage();
+                echo '</div>';
             }
-            */
-        } catch (Exception $e) {
-            echo '<div class="error">';
-            echo $e->getMessage();
-            echo '</div>';
         }
 
         break;

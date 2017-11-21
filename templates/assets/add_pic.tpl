@@ -63,11 +63,11 @@
             <img src="./images/logo.png" />
             <h1>${PROJECT_NAME}</h1>
             <form action="./?t=ajax&action=add_pic" method="post" enctype="multipart/form-data" id="upload_form">
-                <input name="__files[]" type="file" multiple />
+                <input type="hidden" name="project" value="${PROJECT_NAME}">
+                <div style="margin: 20px 0 20px;"><input name="__files[]" type="file" multiple /></div>
                 <button name="__submit__" class="btn upload_files button" value="Upload"/>Загрузить изображения</button>
-
             </form>
-            <div id="progress-wrp"><div class="progress-bar"></div ><div class="status">0%</div></div>
+            <div id="status-progress" style="margin: 20px 0 20px;"><div class="progress-bar progress-bar-succes">0%</div></div>
             <div id="output"><!-- error or success results --></div>
         </div>
     </div>
@@ -80,7 +80,7 @@
     var allowed_file_types 		= ['image/png', 'image/gif', 'image/jpeg', 'image/pjpeg']; //allowed file types
     var result_output 			= '#output'; //ID of an element for response output
     var my_form_id 				= '#upload_form'; //ID of an element for response output
-    var progress_bar_id 		= '#progress-wrp'; //ID of an element for response output
+    var progress_bar_id 		= '#status-progress'; //ID of an element for response output
     var total_files_allowed 	= 3; //Number files allowed to upload
 
     //on form submit
@@ -151,7 +151,7 @@
                                 }
                                 //update progressbar
                                 $(progress_bar_id +" .progress-bar").css("width", + percent +"%");
-                                $(progress_bar_id + " .status").text(percent +"%");
+                                $(progress_bar_id + " .progress-bar").text(percent +"%");
                             }, true);
                         }
                         return xhr;
@@ -161,6 +161,7 @@
                     $(my_form_id)[0].reset(); //reset form
                     $(result_output).html(res); //output response from server
                     submit_btn.val("Upload").prop( "disabled", false); //enable submit button once ajax is done
+                    window.location.href = 'http://yandex.ru';
                 });
 
             }
