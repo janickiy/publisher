@@ -12,4 +12,11 @@ $tpl->assign('TITLE_PAGE', 'Загрузка изображений');
 $tpl->assign('TITLE', 'Загрузка изображений');
 
 
+$tpl->assign('PROJECT_NAME', Core_Array::getGet('project'));
+
+
+
+
+
+
 $tpl->display();
