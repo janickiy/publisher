@@ -32,6 +32,7 @@ class ImageResize {
 	private $resized_response;
 	private $thumb_response;
 	private $unique_rnd_name;
+	private $images_name;
 	public $response;
 	
 	function __construct($config) {	
@@ -51,10 +52,11 @@ class ImageResize {
 	
 	//resize function
 	public function resize(){
-		if($this->generate_image_file){
+		if ($this->generate_image_file) {
 			$this->response["images"] = $this->resize_it();
-		}
-		if($this->generate_thumbnails){
+   		}
+
+		if ($this->generate_thumbnails){
 			$this->response["thumbs"] = $this->thumbnail_it();
 		}
 		return $this->response;
@@ -73,36 +75,42 @@ class ImageResize {
 					throw new Exception($this->get_upload_error()); 
 				}	
 								
-				if(is_uploaded_file($this->file_data['tmp_name'][$x])){
+				if (is_uploaded_file($this->file_data['tmp_name'][$x])){
 
 					$this->curr_tmp_name = $this->file_data['tmp_name'][$x];
 					$this->get_image_info();
 					
 					//create unique file name
-					if($this->random_file_name){ 
+					if ($this->random_file_name) {
 						$this->new_file_name = uniqid().$this->get_extension();
 						$this->unique_rnd_name[$x] = $this->new_file_name;
-					}else{
+					} else {
 						$this->new_file_name = $this->file_data['name'][$x];
 					}
+
+                    $this->images_name = $this->file_data['name'][$x];
 										
 					$this->curr_tmp_name = $this->file_data['tmp_name'][$x];
 					$this->image_res = $this->get_image_resource();
 					$this->save_dir = $this->destination_dir;						
 					//do not resize if image is smaller than max size
-					if($this->image_width <= $this->image_max_size || $this->image_height <= $this->image_max_size){					
+					if ($this->image_width <= $this->image_max_size || $this->image_height <= $this->image_max_size){
 						$this->new_width	= $this->image_width;
 						$this->new_height	=  $this->image_height;						
-						if($this->image_resampling()){
-							$this->resized_response[] = $this->save_image();
+						if ($this->image_resampling()) {
+                            $info = pathinfo($this->file_data['name'][$x]);
+                            $filename = basename($this->file_data['name'][$x],'.' . $info['extension']);
+                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $filename] ;
 						}
-					}else{
+					} else {
 						$this->image_scale	= min($this->image_max_size/$this->image_width, $this->image_max_size/$this->image_height);
 						$this->new_width	= ceil($this->image_scale * $this->image_width);
 						$this->new_height	= ceil($this->image_scale * $this->image_height);	
 						
-						if($this->image_resampling()){
-							$this->resized_response[] = $this->save_image();
+						if ($this->image_resampling()) {
+                            $info = pathinfo($this->file_data['name'][$x]);
+                            $filename = basename($this->file_data['name'][$x],'.' . $info['extension']);
+                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $filename] ;
 						}
 					}
 					imagedestroy($this->image_res);
@@ -125,7 +133,7 @@ class ImageResize {
 					throw new Exception($this->get_upload_error()); 
 				}	
 
-				if(is_uploaded_file($this->file_data['tmp_name'][$x])){
+				if (is_uploaded_file($this->file_data['tmp_name'][$x])){
 					$this->curr_tmp_name = $this->file_data['tmp_name'][$x];
 					$this->get_image_info();
 					
@@ -144,7 +152,8 @@ class ImageResize {
 					$this->save_dir = $this->thumbnail_destination_dir;	
 					
 					
-					$this->y_offset = 0; $this->x_offset = 0;
+					$this->y_offset = 0;
+					$this->x_offset = 0;
 					if($this->image_width > $this->image_height){
 						$this->x_offset = ($this->image_width - $this->image_height) / 2;
 						$this->image_width = $this->image_height  = $this->image_width - ($this->x_offset * 2);

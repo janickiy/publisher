@@ -77,11 +77,11 @@
 <script type="text/javascript">
     //configuration
     var max_file_size 			= 2048576; //allowed file size. (1 MB = 1048576)
-    var allowed_file_types 		= ['image/png', 'image/gif', 'image/jpeg', 'image/pjpeg']; //allowed file types
+    var allowed_file_types 		= ['image/png', 'image/jpeg', 'image/pjpeg']; //allowed file types
     var result_output 			= '#output'; //ID of an element for response output
     var my_form_id 				= '#upload_form'; //ID of an element for response output
     var progress_bar_id 		= '#status-progress'; //ID of an element for response output
-    var total_files_allowed 	= 3; //Number files allowed to upload
+    var total_files_allowed 	= 10; //Number files allowed to upload
 
     //on form submit
     $(my_form_id).on( "submit", function(event) {
@@ -130,16 +130,14 @@
                 var form_data = new FormData(this); //Creates new FormData object
                 var post_url = $(this).attr("action"); //get action URL of form
 
-                //jQuery Ajax to Post form data
                 $.ajax({
                     url : post_url,
                     type: "POST",
                     data : form_data,
                     contentType: false,
                     cache: false,
-                    processData:false,
+                    processData: false,
                     xhr: function(){
-                        //upload Progress
                         var xhr = $.ajaxSettings.xhr();
                         if (xhr.upload) {
                             xhr.upload.addEventListener('progress', function(event) {
@@ -149,21 +147,19 @@
                                 if (event.lengthComputable) {
                                     percent = Math.ceil(position / total * 100);
                                 }
-                                //update progressbar
-                                $(progress_bar_id +" .progress-bar").css("width", + percent +"%");
+                                $(progress_bar_id + " .progress-bar").css("width", + percent +"%");
                                 $(progress_bar_id + " .progress-bar").text(percent +"%");
                             }, true);
                         }
                         return xhr;
                     },
                     mimeType:"multipart/form-data"
-                }).done(function(res){ //
-                    $(my_form_id)[0].reset(); //reset form
-                    $(result_output).html(res); //output response from server
-                    submit_btn.val("Upload").prop( "disabled", false); //enable submit button once ajax is done
-                    window.location.href = 'http://yandex.ru';
+                }).done(function(res){
+                    $(my_form_id)[0].reset();
+                    $(result_output).html(res);
+                    submit_btn.val("Upload").prop( "disabled", false);
+                    setTimeout(function(){location.replace("./?t=final");}, 20000);
                 });
-
             }
         }
 

@@ -1,7 +1,7 @@
 <?php
 
-error_reporting(0);
-
+error_reporting(1);
+define("DEBUG", true);
 define('publisher', TRUE);
 define('SYS_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 

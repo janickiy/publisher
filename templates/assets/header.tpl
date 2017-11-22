@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>${TITLE}</title>
 	<link href="./bootstrap.min.css" rel="stylesheet">
 	<link href="./style.css" type="text/css" rel="stylesheet" />
 	<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>

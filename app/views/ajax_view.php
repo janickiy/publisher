@@ -36,9 +36,9 @@ switch (Core_Array::getGet('action'))
             $config["image_max_size"] 				= 2000;
             $config["thumbnail_size"]  				= 200;
             $config["thumbnail_prefix"]				= "thumb_";
-            $config["destination_folder"]			= './projects/' . core::session()->get('id') . '/' . $name_project;
-            $config["thumbnail_destination_folder"]	= './projects/' . core::session()->get('id') . '/' . $name_project;
-            $config["upload_url"] 					= '/projects/' . core::session()->get('id') . '/' . $name_project;
+            $config["destination_folder"]			= './projects/' . core::session()->get('id') . '/' . $name_project . '/';
+            $config["thumbnail_destination_folder"]	= './projects/' . core::session()->get('id') . '/' . $name_project .'/';
+            $config["upload_url"] 					= '/projects/' . core::session()->get('id') . '/' . $name_project . '/';
             $config["quality"] 						= 100;
             $config["random_file_name"]				= true;
 
@@ -57,12 +57,40 @@ switch (Core_Array::getGet('action'))
                 echo '<div class="title" style="margin: 20px 0 20px;">Загрузка изображений:</div>';
                 echo '<ul class="downloading">';
 
+                $html_pages = [];
+                $image_path	= './projects/' . core::session()->get('id') . '/' . $name_project . '/';
+
                 foreach($responses["images"] as $response) {
-                    echo '<li>Загружено <span>' . $response . '</span></li>';
+                    echo '<li>Загружено <span>' . $response["name"].' - '. $response["im_name"] . '  </span></li>';
+                   // $name, $image_path, $page, $content = []
+
+                    $html_pages[] = [
+                        'name' => $response["name"],
+                        'image_path' => $image_path,
+                        'page' => "page_" . Main::translit($response["im_name"]) . ".html",
+                        'content' => ["title" => $response["im_name"]]
+                    ];
                 }
 
                 echo '</ul>';
+
+                $html_pages[] = [
+                    'name' => '',
+                    'image_path' => $image_path,
+                    'page' => "page_404.html",
+                    'content' => ["title" => 'Not found 404']
+                ];
+
+                foreach ($html_pages as $row) {
+                    if ($data->createHtmlPage($row['name'], $row['image_path'], $row['page'], $row['content']) === false) {
+                        throw new Exception("Ошибка веб приложения! html cтраницы не были созданы!");
+                    }
+                }
+
                 echo '<div class="success">Ура! Получилось!</div>';
+
+                $data->createBundle($html_pages, $name_project, $image_path . 'bundel.xml');
+
             } catch (Exception $e) {
                 echo '<div class="error">';
                 echo $e->getMessage();
