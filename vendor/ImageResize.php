@@ -98,9 +98,7 @@ class ImageResize {
 						$this->new_width	= $this->image_width;
 						$this->new_height	=  $this->image_height;						
 						if ($this->image_resampling()) {
-                            $info = pathinfo($this->file_data['name'][$x]);
-                            $filename = basename($this->file_data['name'][$x],'.' . $info['extension']);
-                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $filename] ;
+                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $this->file_data['name'][$x]] ;
 						}
 					} else {
 						$this->image_scale	= min($this->image_max_size/$this->image_width, $this->image_max_size/$this->image_height);
@@ -108,9 +106,7 @@ class ImageResize {
 						$this->new_height	= ceil($this->image_scale * $this->image_height);	
 						
 						if ($this->image_resampling()) {
-                            $info = pathinfo($this->file_data['name'][$x]);
-                            $filename = basename($this->file_data['name'][$x],'.' . $info['extension']);
-                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $filename] ;
+                            $this->resized_response[] = ['name' => $this->save_image(), 'im_name' => $this->file_data['name'][$x]] ;
 						}
 					}
 					imagedestroy($this->image_res);

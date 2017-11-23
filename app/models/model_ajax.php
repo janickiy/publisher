@@ -45,7 +45,7 @@ class Model_ajax extends Model
      * @param $bundel_name
      * @param $file
      */
-    public function createBundle($html_pages, $bundel_name, $file)
+    public function createBundle($html_pages, $bundel_name, $file, $path)
     {
         $xml = new DomDocument('1.0','utf-8');
         $items = $xml->appendChild($xml->createElement('items'));
@@ -56,7 +56,7 @@ class Model_ajax extends Model
         foreach ($html_pages as $item) {
             $page = $pages->appendChild($xml->createElement('page'));
             $url = $page->appendChild($xml->createElement('url'));
-            $url->appendChild($xml->createTextNode($item['page']));
+            $url->appendChild($xml->createTextNode($path . $item['page']));
             $name = $page->appendChild($xml->createElement('name'));
             $name->appendChild($xml->createTextNode($item['content']['title']));
         }

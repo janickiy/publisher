@@ -68,7 +68,7 @@ switch (Core_Array::getGet('action'))
                         'name' => $response["name"],
                         'image_path' => $image_path,
                         'page' => "page_" . Main::translit($response["im_name"]) . ".html",
-                        'content' => ["title" => $response["im_name"]]
+                        'content' => ["title" => preg_replace("/(\.[a-z0-9]+)$/i", "", $response["im_name"])]
                     ];
                 }
 
@@ -89,7 +89,7 @@ switch (Core_Array::getGet('action'))
 
                 echo '<div class="success">Ура! Получилось!</div>';
 
-                $data->createBundle($html_pages, $name_project, $image_path . 'bundel.xml');
+                $data->createBundle($html_pages, $name_project, $image_path . 'bundel.xml', $image_path);
 
             } catch (Exception $e) {
                 echo '<div class="error">';
