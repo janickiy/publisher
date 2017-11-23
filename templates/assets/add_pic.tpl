@@ -73,7 +73,6 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     //configuration
     var max_file_size 			= 2048576; //allowed file size. (1 MB = 1048576)
@@ -97,12 +96,12 @@
         if(!window.File && window.FileReader && window.FileList && window.Blob){ //if browser doesn't supports File API
             error.push("Your browser does not support new File API! Please upgrade."); //push error text
         }else{
-            var total_selected_files = this.elements['__files[]'].files.length; //number of files
+            var total_selected_files = this.elements['__files[]'].files.length;
 
             //limit number of files allowed
             if (total_selected_files > total_files_allowed){
                 error.push( "You have selected " + total_selected_files + " file(s), " + total_files_allowed + " is maximum!"); //push error text
-                proceed = false; //set proceed flag to false
+                proceed = false;
             }
             //iterate files in file input field
             $(this.elements['__files[]'].files).each(function(i, ifile){
@@ -129,6 +128,7 @@
                 //submit_btn.val("Please Wait...").prop( "disabled", true); //disable submit button
                 var form_data = new FormData(this); //Creates new FormData object
                 var post_url = $(this).attr("action"); //get action URL of form
+                var Project = $('input[name="project"]').val();
 
                 $.ajax({
                     url : post_url,
@@ -158,7 +158,7 @@
                     $(my_form_id)[0].reset();
                     $(result_output).html(res);
                     submit_btn.val("Upload").prop( "disabled", false);
-                    setTimeout(function(){location.replace("./?t=final");}, 20000);
+                    setTimeout(function(){location.replace("./?t=final&project=" + Project + "&new");}, 2000);
                 });
             }
         }
@@ -167,7 +167,6 @@
         $(error).each(function(i){ //output any error to output element
             $(result_output).append('<div class="error">'+error[i]+"</div>");
         });
-
     });
 </script>
 <!-- INCLUDE footer.tpl -->

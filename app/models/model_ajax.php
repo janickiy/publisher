@@ -54,16 +54,14 @@ class Model_ajax extends Model
         $pages = $items->appendChild($xml->createElement('pages'));
 
         foreach ($html_pages as $item) {
-
             $page = $pages->appendChild($xml->createElement('page'));
-            $page->appendChild($xml->createTextNode($item['page']));
-            $title = $pages->appendChild($xml->createElement('title'));
-            $title->appendChild($xml->createTextNode($item['content']['title']));
+            $url = $page->appendChild($xml->createElement('url'));
+            $url->appendChild($xml->createTextNode($item['page']));
+            $name = $page->appendChild($xml->createElement('name'));
+            $name->appendChild($xml->createTextNode($item['content']['title']));
         }
 
         $xml->formatOutput = true;
         $xml->save($file);
     }
-
-
 }

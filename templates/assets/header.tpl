@@ -15,8 +15,7 @@
 		<div class="collapse navbar-collapse" id="navbar-main">
 			<ul class="nav navbar-nav">
 			<li><a <!-- IF '${ACTIVE_MENU}' == '' -->class="active"<!-- END IF --> href="./">Создание проекта</a></li>
-			<li><a <!-- IF '${ACTIVE_MENU}' == 'add_pic' -->class="active"<!-- END IF --> href="./?t=add_pic">Загрузка изображений</a></li>
-			<li><a <!-- IF '${ACTIVE_MENU}' == 'final' -->class="active"<!-- END IF --> href="./?t=final">Вывод результата</a></li>
+			<li><a <!-- IF '${ACTIVE_MENU}' == 'final' -->class="active"<!-- END IF --> href="./?t=final">Проекты</a></li>
 			</ul>
 		</div>
 	</div>

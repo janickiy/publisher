@@ -15,10 +15,10 @@ $cmspaths = array(
 	'extra' => 'app/snippets'
 );
 
-require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
+//require_once SYS_ROOT . $cmspaths['config'] . '/config_db.php';
 require_once SYS_ROOT . $cmspaths['core'] . '/core.php';
 core::init($cmspaths);
-core::$db = new DB($ConfigDB);
+//core::$db = new DB($ConfigDB);
 core::$session = new Session();
 
 core::setTemplate("assets/");
