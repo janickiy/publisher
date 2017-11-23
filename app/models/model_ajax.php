@@ -22,7 +22,7 @@ class Model_ajax extends Model
         $html .= "<meta name=\"description\" content=\"" . $content['description'] . "\">\r\n";
         $html .= "</head>\r\n";
         if ($name)
-            $html .= "<body style=\"background-image: url(" . $name . "); background-repeat: no-repeat;\"\r\n";
+            $html .= "<body style=\"background-image: url(" . $name . "); background-repeat: no-repeat; background-position: top center;\"\r\n";
         else
             $html .= "<body>\r\n";
         $html .= $content['html'];

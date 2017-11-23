@@ -74,12 +74,14 @@ switch (Core_Array::getGet('action'))
 
                 echo '</ul>';
 
+                /*
                 $html_pages[] = [
                     'name' => '',
                     'image_path' => $image_path,
                     'page' => "page_404.html",
                     'content' => ["title" => 'Not found 404']
                 ];
+                */
 
                 foreach ($html_pages as $row) {
                     if ($data->createHtmlPage($row['name'], $row['image_path'], $row['page'], $row['content']) === false) {

@@ -178,13 +178,19 @@ class ImageResize {
 		
 		switch($this->image_type){//determine mime type
 			case 'image/png': 
-				imagepng($this->new_canvas, $this->save_dir.$this->new_file_name); imagedestroy($this->new_canvas); return $this->new_file_name; 
+				imagepng($this->new_canvas, $this->save_dir.$this->new_file_name);
+				imagedestroy($this->new_canvas);
+				return $this->new_file_name;
 				break;
 			case 'image/gif': 
-				imagegif($this->new_canvas, $this->save_dir.$this->new_file_name); imagedestroy($this->new_canvas); return $this->new_file_name; 
+				imagegif($this->new_canvas, $this->save_dir.$this->new_file_name);
+				imagedestroy($this->new_canvas);
+				return $this->new_file_name;
 				break;          
 			case 'image/jpeg': case 'image/pjpeg': 
-				imagejpeg($this->new_canvas, $this->save_dir.$this->new_file_name, $this->quality); imagedestroy($this->new_canvas); return $this->new_file_name; 
+				imagejpeg($this->new_canvas, $this->save_dir.$this->new_file_name, $this->quality);
+				imagedestroy($this->new_canvas);
+				return $this->new_file_name;
 				break;
 			default: 
 				imagedestroy($this->new_canvas);
@@ -200,7 +206,7 @@ class ImageResize {
 			$this->image_height 	= $this->image_size_info[1]; //image height
 			$this->image_type 		= $this->image_size_info['mime']; //image type
 		}else{
-			throw new Exception("Make sure Image file is valid image!");
+			throw new Exception("Убедитесь, что файл изображения валидный");
 		}
 	}	
 	
@@ -230,24 +236,28 @@ class ImageResize {
 	}
 	
 	private function get_extension(){
-		   if(empty($this->image_type)) return false;
+		   if (empty($this->image_type)) return false;
 		   switch($this->image_type)
 		   {
-			   case 'image/gif': return '.gif';
-			   case 'image/jpeg': return '.jpg';
-			   case 'image/png': return '.png';
-			   default: return false;
+			   case 'image/gif':
+			       return '.gif';
+			   case 'image/jpeg':
+			       return '.jpg';
+			   case 'image/png':
+			       return '.png';
+			   default:
+			       return false;
 		   }
 	   }
 	   
 	private function get_upload_error(){
 		switch($this->upload_error_no){
-			case 1 : return 'The uploaded file exceeds the upload_max_filesize directive in php.ini.';
-			case 2 : return 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.';
-			case 3 : return 'The uploaded file was only partially uploaded.';
-			case 4 : return 'No file was uploaded.';
-			case 5 : return 'Missing a temporary folder. Introduced in PHP 5.0.3';
-			case 6 : return 'Failed to write file to disk. Introduced in PHP 5.1.0';
+			case 1 : return 'Размер загруженного файл превышает значения, что указан в директиве upload_max_filesize в php.ini';
+			case 2 : return 'Загруженный файл превышает директиву MAX_FILE_SIZE, указанную в HTML-форме.';
+			case 3 : return 'Загруженный файл был загружен только частично.';
+			case 4 : return 'Файл не был загружен.';
+			case 5 : return 'Отсутствует временная папка. ';
+			case 6 : return 'Не удалось записать файл на диск.';
 		}
 	}
 
