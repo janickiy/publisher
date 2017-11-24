@@ -8,7 +8,7 @@
             <!-- IF '${NEW}' != '' --><div class="title">Ваш проект готов!</div><!-- END IF -->
             <ul class="page_list">
                 <!-- BEGIN pages_row -->
-                <li><a href="${PAGE}">${NAME}</a></li>
+                <li><a target="_blank" href="${PAGE}">${NAME}</a></li>
                 <!-- END pages_row -->
             </ul>
             <a href="./" class="success">Загрузить еще проект?</a>
