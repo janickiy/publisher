@@ -75,12 +75,12 @@
 
 <script type="text/javascript">
     //configuration
-    var max_file_size 			= 2048576; //allowed file size. (1 MB = 1048576)
+    var max_file_size 			= 32048576; //allowed file size. (1 MB = 1048576)
     var allowed_file_types 		= ['image/png', 'image/jpeg', 'image/pjpeg']; //allowed file types
     var result_output 			= '#output'; //ID of an element for response output
     var my_form_id 				= '#upload_form'; //ID of an element for response output
     var progress_bar_id 		= '#status-progress'; //ID of an element for response output
-    var total_files_allowed 	= 10; //Number files allowed to upload
+    var total_files_allowed 	= 20; //Number files allowed to upload
 
     //on form submit
     $(my_form_id).on( "submit", function(event) {

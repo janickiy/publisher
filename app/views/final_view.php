@@ -34,7 +34,7 @@ if (Core_Array::getGet('project')) {
                 for($i=0;$i<count($row);$i++) {
                     $rowProject = $tpl->fetch('pages_row');
                     $rowProject->assign('NAME', $row[$i]["name"]);
-                    $rowProject->assign('PAGE', $row[$i]["url"]);
+                    $rowProject->assign('PAGE', str_replace('./', 'http://' . $_SERVER['SERVER_NAME'] . '/', $row[$i]["url"]));
                     $tpl->assign('pages_row', $rowProject);
                 }
             }

@@ -13,6 +13,13 @@ class Model_ajax extends Model
      */
     public function createHtmlPage($name, $path, $page, $content = [])
     {
+		$size = @getimagesize ($path . $name);
+		
+		if ($size) {
+			$w=(int)$size[0]; 
+			$h=(int)$size[1];
+		}
+
         $html = "<!DOCTYPE html>\r\n";
         $html .= "<html>\r\n";
         $html .= "<head>\r\n";
@@ -20,9 +27,14 @@ class Model_ajax extends Model
         $html .= "<title>" . $content['title'] . "</title>\r\n";
         $html .= "<meta name=\"keywords\" content=\"" . $content['keywords'] . "\">\r\n";
         $html .= "<meta name=\"description\" content=\"" . $content['description'] . "\">\r\n";
+
+		if (isset($w) && isset($h)) {
+			$html .= "<style>html, body { height: " .$h ."px; }</style>\r\n";
+		}
+		
         $html .= "</head>\r\n";
         if ($name)
-            $html .= "<body style=\"background-image: url(" . $name . "); background-repeat: no-repeat; background-position: top center;\"\r\n";
+            $html .= "<body style=\"background-image: url(" . $name . "); background-repeat: no-repeat; background-position: top center;\">\r\n";
         else
             $html .= "<body>\r\n";
         $html .= $content['html'];
